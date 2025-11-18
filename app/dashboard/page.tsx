@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -9,13 +10,35 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function DashboardPage() {
-  // TODO: Get real user data from auth context/API
+  const { user, loading, signOut } = useAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push("/login");
+    }
+  }, [user, loading, router]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-lg">Ładowanie...</div>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
+
   const userData = {
-    name: "Jan Kowalski",
-    email: "jan.kowalski@example.com",
-    joinDate: "2024-01-15",
+    name: (user.user_metadata?.full_name as string) || user.email?.split("@")[0] || "Użytkownik",
+    email: user.email || "brak@email.com",
+    joinDate: new Date(user.created_at).toISOString().split("T")[0],
+    emailVerified: user.email_confirmed_at !== null,
   };
 
   return (
@@ -29,8 +52,8 @@ export default function DashboardPage() {
               Witaj, {userData.name}!
             </p>
           </div>
-          <Button variant="outline" asChild>
-            <Link href="/login">Wyloguj się</Link>
+          <Button variant="outline" onClick={signOut}>
+            Wyloguj się
           </Button>
         </div>
 
@@ -61,7 +84,7 @@ export default function DashboardPage() {
                 {userData.email}
               </div>
               <p className="text-xs text-muted-foreground">
-                Zweryfikowany
+                {userData.emailVerified ? "Zweryfikowany" : "Niezweryfikowany"}
               </p>
             </CardContent>
           </Card>
@@ -131,6 +154,14 @@ export default function DashboardPage() {
                   })}
                 </p>
               </div>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">
+                  Status weryfikacji
+                </p>
+                <p className="text-lg font-semibold">
+                  {userData.emailVerified ? "✓ Zweryfikowany" : "✗ Niezweryfikowany"}
+                </p>
+              </div>
               <Button className="w-full mt-4">Edytuj profil</Button>
             </CardContent>
           </Card>
@@ -162,4 +193,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-
