@@ -49,7 +49,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen p-4 md:p-8">
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div className="flex items-center pt-16 md:pt-0">
           <div>
@@ -60,131 +60,56 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Stats Cards */}
-        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {t("profile")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{t("active")}</div>
-              <p className="text-xs text-muted-foreground">
-                {t("accountStatus")}
-              </p>
-            </CardContent>
-          </Card>
+        {/* Main Layout - 1 column */}
+        <div className="grid gap-6 grid-cols-1">
+            
+            {/* Profile Info */}
+            <div className="space-y-6">
+                <Card className="h-full">
+                    <CardHeader className="flex flex-row items-start justify-between space-y-0">
+                        <div className="space-y-1.5">
+                            <CardTitle>{t("userProfile")}</CardTitle>
+                            <CardDescription>{t("accountInfo")}</CardDescription>
+                        </div>
+                        <div className="text-right">
+                            <p className="text-sm font-medium text-muted-foreground">{t("verificationStatus")}</p>
+                            <p className={`text-lg font-semibold ${userData.emailVerified ? "text-green-600 dark:text-green-400" : "text-destructive"}`}>
+                                {userData.emailVerified ? t("verified") : t("unverified")}
+                            </p>
+                        </div>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                        {/* Email - Full width */}
+                        
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {t("email")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold truncate">
-                {userData.email}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {userData.emailVerified ? t("verified") : t("unverified")}
-              </p>
-            </CardContent>
-          </Card>
+                        {/* Other details grid */}
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <p className="text-sm font-medium text-muted-foreground">{t("email")}</p>
+                            <p className="text-lg font-semibold break-all">{userData.email}</p>
+                        </div>
+                            <div>
+                                <p className="text-sm font-medium text-muted-foreground">{t("name")}</p>
+                                <p className="text-lg font-semibold">{userData.name}</p>
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-muted-foreground">{t("joinDate")}</p>
+                                <p className="text-lg font-semibold">{new Date(userData.joinDate).toLocaleDateString()}</p>
+                            </div>
+                            <div>
+                                <p className="text-sm font-medium text-muted-foreground">{t("accountStatus")}</p>
+                                <p className="text-lg font-semibold">{t("active")}</p>
+                            </div>
+                            
+                        </div>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {t("joinDate")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">
-                {new Date(userData.joinDate).toLocaleDateString()}
-              </div>
-              <p className="text-xs text-muted-foreground">
-                {t("memberSince")}
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                {t("session")}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{t("active")}</div>
-              <p className="text-xs text-muted-foreground">
-                {t("loggedIn")}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
-
-        {/* Main Content */}
-        <div className="grid gap-4 md:grid-cols-2">
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("userProfile")}</CardTitle>
-              <CardDescription>
-                {t("accountInfo")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  {t("name")}
-                </p>
-                <p className="text-lg font-semibold">{userData.name}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  {t("email")}
-                </p>
-                <p className="text-lg font-semibold">{userData.email}</p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  {t("joinDate")}
-                </p>
-                <p className="text-lg font-semibold">
-                  {new Date(userData.joinDate).toLocaleDateString()}
-                </p>
-              </div>
-              <div>
-                <p className="text-sm font-medium text-muted-foreground">
-                  {t("verificationStatus")}
-                </p>
-                <p className="text-lg font-semibold">
-                  {userData.emailVerified ? "✓ " + t("verified") : "✗ " + t("unverified")}
-                </p>
-              </div>
-              <EditProfileDialog user={user} />
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>{t("quickActions")}</CardTitle>
-              <CardDescription>
-                {t("commonFunctions")}
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-2">
-              <ChangePasswordDialog />
-              <Button variant="outline" className="w-full justify-start">
-                {t("securitySettings")}
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                {t("activityHistory")}
-              </Button>
-              <Button variant="outline" className="w-full justify-start">
-                {t("notifications")}
-              </Button>
-            </CardContent>
-          </Card>
+                        <div className="flex flex-col gap-2 sm:flex-col w-full">
+                            <EditProfileDialog user={user} />
+                            <ChangePasswordDialog />
+                        </div>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
       </div>
     </div>

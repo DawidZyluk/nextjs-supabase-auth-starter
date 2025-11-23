@@ -76,7 +76,7 @@ export function ChangePasswordDialog() {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="outline" className="w-full justify-start">
+        <Button variant="outline" className="w-full mt-4">
            {t("changePassword")}
         </Button>
       </DialogTrigger>
