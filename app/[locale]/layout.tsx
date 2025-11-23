@@ -6,6 +6,7 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
 import HeaderActions from "@/components/HeaderActions";
+import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
   title: "Auth App",
@@ -46,6 +47,7 @@ export default async function RootLayout({
             <AuthProvider>
                 <HeaderActions />
                 {children}
+                <Toaster />
             </AuthProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
