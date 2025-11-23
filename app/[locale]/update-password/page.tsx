@@ -203,7 +203,7 @@ export default function UpdatePasswordPage() {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={t("passwordPlaceholder")}
                   disabled={loading}
                   {...register("password", {
                     required: true,
@@ -246,7 +246,7 @@ export default function UpdatePasswordPage() {
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={t("confirmPasswordPlaceholder")}
                   disabled={loading}
                   {...register("confirmPassword", {
                     required: true,

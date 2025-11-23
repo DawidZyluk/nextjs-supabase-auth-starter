@@ -94,7 +94,7 @@ export default function RegisterPage() {
               <Input
                 id="name"
                 type="text"
-                placeholder="Jan Kowalski"
+                placeholder={t("namePlaceholder")}
                 disabled={loading}
                 {...register("name", {
                   required: true,
@@ -113,7 +113,7 @@ export default function RegisterPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="twoj@email.com"
+                placeholder={t("emailPlaceholder")}
                 disabled={loading}
                 {...register("email", {
                   required: true,
@@ -137,7 +137,7 @@ export default function RegisterPage() {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={t("passwordPlaceholder")}
                   disabled={loading}
                   {...register("password", {
                     required: true,
@@ -180,7 +180,7 @@ export default function RegisterPage() {
                 <Input
                   id="confirmPassword"
                   type={showConfirmPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={t("passwordPlaceholder")}
                   disabled={loading}
                   {...register("confirmPassword", {
                     required: true,

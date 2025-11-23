@@ -105,7 +105,7 @@ export default function ResetPasswordPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="twoj@email.com"
+                placeholder={t("emailPlaceholder")}
                 disabled={loading}
                 {...register("email", {
                   required: true,

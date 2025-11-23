@@ -80,7 +80,7 @@ export default function LoginPage() {
               <Input
                 id="email"
                 type="email"
-                placeholder="twoj@email.com"
+                placeholder={t("emailPlaceholder")}
                 disabled={loading}
                 {...register("email", {
                   required: true,
@@ -112,7 +112,7 @@ export default function LoginPage() {
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="••••••••"
+                  placeholder={t("passwordPlaceholder")}
                   disabled={loading}
                   {...register("password", {
                     required: true,

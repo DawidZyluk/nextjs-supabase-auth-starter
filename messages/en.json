@@ -17,7 +17,10 @@
         "updatePassword": "Update Password",
         "haveAccount": "Already have an account?",
         "noAccount": "Don't have an account?",
-        "checkEmail": "Check your email for the confirmation link."
+        "checkEmail": "Check your email for the confirmation link.",
+        "emailPlaceholder": "your@email.com",
+        "passwordPlaceholder": "Password",
+        "namePlaceholder": "John Doe"
     },
     "ResetPassword": {
         "title": "Reset Password",
@@ -29,7 +32,8 @@
         "email": "Email",
         "submit": "Send reset link",
         "sending": "Sending...",
-        "error": "Error resetting password"
+        "error": "Error resetting password",
+        "emailPlaceholder": "your@email.com"
     },
     "UpdatePassword": {
         "title": "Set new password",
@@ -47,7 +51,9 @@
         "submit": "Update Password",
         "backToLogin": "Back to login",
         "newPassword": "New Password",
-        "saving": "Saving..."
+        "saving": "Saving...",
+        "passwordPlaceholder": "New password",
+        "confirmPasswordPlaceholder": "Confirm password"
     },
     "Dashboard": {
         "title": "Dashboard",
