@@ -2,7 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -15,8 +15,11 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 
 export default function ResetPasswordPage() {
+  const t = useTranslations("ResetPassword");
+  const tCommon = useTranslations("Common");
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -42,7 +45,7 @@ export default function ResetPasswordPage() {
       );
 
       if (resetError) {
-        setError(resetError.message || "Błąd podczas resetowania hasła");
+        setError(resetError.message || t("error"));
         setLoading(false);
         return;
       }
@@ -50,7 +53,7 @@ export default function ResetPasswordPage() {
       setSuccess(true);
       setLoading(false);
     } catch (err: any) {
-      setError(err.message || "Wystąpił nieoczekiwany błąd");
+      setError(err.message || tCommon("error"));
       setLoading(false);
     }
   };
@@ -60,20 +63,19 @@ export default function ResetPasswordPage() {
       <div className="flex items-center justify-center min-h-screen p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>Email wysłany!</CardTitle>
+            <CardTitle>{t("successTitle")}</CardTitle>
             <CardDescription>
-              Sprawdź swoją skrzynkę pocztową
+              {t("successDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Wysłaliśmy Ci link do resetowania hasła na podany adres email.
-              Kliknij w link, aby ustawić nowe hasło.
+              {t("successMessage")}
             </p>
           </CardContent>
           <CardFooter>
             <Button variant="outline" className="w-full" asChild>
-              <Link href="/login">Powrót do logowania</Link>
+              <Link href="/login">{t("backToLogin")}</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -85,9 +87,9 @@ export default function ResetPasswordPage() {
     <div className="flex items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Resetowanie hasła</CardTitle>
+          <CardTitle>{t("title")}</CardTitle>
           <CardDescription>
-            Podaj swój adres email, a wyślemy Ci link do resetowania hasła
+            {t("description")}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -99,34 +101,34 @@ export default function ResetPasswordPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("email")}</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="twoj@email.com"
                 disabled={loading}
                 {...register("email", {
-                  required: "Email jest wymagany",
+                  required: true,
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Nieprawidłowy adres email",
+                    message: "Invalid email",
                   },
                 })}
                 aria-invalid={errors.email ? "true" : "false"}
               />
               {errors.email && (
                 <p className="text-sm text-destructive">
-                  {errors.email.message as string}
+                  {errors.email.message as string || "Required"}
                 </p>
               )}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Wysyłanie..." : "Wyślij link resetujący"}
+              {loading ? t("sending") : t("submit")}
             </Button>
             <Button variant="ghost" className="w-full" asChild>
-              <Link href="/login">Powrót do logowania</Link>
+              <Link href="/login">{t("backToLogin")}</Link>
             </Button>
           </CardFooter>
         </form>
@@ -134,4 +136,3 @@ export default function ResetPasswordPage() {
     </div>
   );
 }
-

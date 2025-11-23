@@ -2,8 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter, Link } from "@/i18n/routing";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,9 +16,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 
 export default function UpdatePasswordPage() {
   const router = useRouter();
+  const t = useTranslations("UpdatePassword");
+  const tCommon = useTranslations("Common");
+
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -41,7 +44,7 @@ export default function UpdatePasswordPage() {
     const initializeSession = async () => {
       // First, check if we already have a valid session
       const { data: { session: existingSession } } = await supabase.auth.getSession();
-      
+
       if (existingSession) {
         setSessionReady(true);
         return;
@@ -61,7 +64,7 @@ export default function UpdatePasswordPage() {
             if (session) {
               setSessionReady(true);
             } else {
-              setError("Nieprawidłowy lub brakujący link resetujący. Proszę spróbować ponownie.");
+              setError(t("verifyError"));
             }
           });
         }, 100);
@@ -70,7 +73,7 @@ export default function UpdatePasswordPage() {
 
       // Verify it's a recovery type
       if (type !== "recovery") {
-        setError("Nieprawidłowy typ linku. To nie jest link resetujący hasło.");
+        setError(t("invalidLinkType"));
         return;
       }
 
@@ -82,7 +85,7 @@ export default function UpdatePasswordPage() {
         });
 
         if (sessionError) {
-          setError(sessionError.message || "Błąd podczas weryfikacji linku resetującego.");
+          setError(sessionError.message || t("sessionError"));
           return;
         }
 
@@ -92,7 +95,7 @@ export default function UpdatePasswordPage() {
           window.history.replaceState(null, "", window.location.pathname);
         }
       } catch (err: any) {
-        setError(err.message || "Wystąpił nieoczekiwany błąd");
+        setError(err.message || tCommon("error"));
       }
     };
 
@@ -110,11 +113,11 @@ export default function UpdatePasswordPage() {
     return () => {
       subscription.unsubscribe();
     };
-  }, [supabase.auth]);
+  }, [supabase.auth, t, tCommon]);
 
   const onSubmit = async (data: any) => {
     if (!sessionReady) {
-      setError("Proszę poczekać na weryfikację linku...");
+      setError(t("waitVerification"));
       return;
     }
 
@@ -128,7 +131,7 @@ export default function UpdatePasswordPage() {
       });
 
       if (updateError) {
-        setError(updateError.message || "Błąd podczas aktualizacji hasła");
+        setError(updateError.message || t("updateError"));
         setLoading(false);
         return;
       }
@@ -141,7 +144,7 @@ export default function UpdatePasswordPage() {
         router.push("/login");
       }, 2000);
     } catch (err: any) {
-      setError(err.message || "Wystąpił nieoczekiwany błąd");
+      setError(err.message || tCommon("error"));
       setLoading(false);
     }
   };
@@ -151,19 +154,19 @@ export default function UpdatePasswordPage() {
       <div className="flex items-center justify-center min-h-screen p-4">
         <Card className="w-full max-w-md">
           <CardHeader>
-            <CardTitle>Hasło zaktualizowane!</CardTitle>
+            <CardTitle>{t("successTitle")}</CardTitle>
             <CardDescription>
-              Twoje hasło zostało pomyślnie zmienione
+              {t("successDescription")}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <p className="text-sm text-muted-foreground">
-              Przekierowujemy Cię do strony logowania...
+              {t("redirecting")}
             </p>
           </CardContent>
           <CardFooter>
             <Button className="w-full" asChild>
-              <Link href="/login">Przejdź do logowania</Link>
+              <Link href="/login">{t("goToLogin")}</Link>
             </Button>
           </CardFooter>
         </Card>
@@ -175,19 +178,19 @@ export default function UpdatePasswordPage() {
     <div className="flex items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Ustaw nowe hasło</CardTitle>
+          <CardTitle>{t("title")}</CardTitle>
           <CardDescription>
-            Wprowadź nowe hasło dla swojego konta
+            {t("description")}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
             {!sessionReady && !error && (
               <div className="p-3 text-sm text-muted-foreground bg-muted/50 rounded-md border">
-                Weryfikowanie linku resetującego...
+                {t("verifying")}
               </div>
             )}
-            
+
             {error && (
               <div className="p-3 text-sm text-destructive bg-destructive/10 rounded-md border border-destructive/20">
                 {error}
@@ -195,18 +198,18 @@ export default function UpdatePasswordPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="password">Nowe hasło</Label>
+              <Label htmlFor="password">{t("newPassword")}</Label>
               <div className="relative">
                 <Input
                   id="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="Hasło"
+                  placeholder="••••••••"
                   disabled={loading}
                   {...register("password", {
-                    required: "Hasło jest wymagane",
+                    required: true,
                     minLength: {
                       value: 6,
-                      message: "Hasło musi mieć co najmniej 6 znaków",
+                      message: "Min 6 chars",
                     },
                   })}
                   aria-invalid={errors.password ? "true" : "false"}
@@ -226,19 +229,19 @@ export default function UpdatePasswordPage() {
                     <Eye className="h-4 w-4 text-muted-foreground" />
                   )}
                   <span className="sr-only">
-                    {showPassword ? "Ukryj hasło" : "Pokaż hasło"}
+                    {showPassword ? "Hide" : "Show"}
                   </span>
                 </Button>
               </div>
               {errors.password && (
                 <p className="text-sm text-destructive">
-                  {errors.password.message as string}
+                  {errors.password.message as string || "Required"}
                 </p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Potwierdź hasło</Label>
+              <Label htmlFor="confirmPassword">{t("confirmPassword", { defaultMessage: "Confirm Password" })}</Label>
               <div className="relative">
                 <Input
                   id="confirmPassword"
@@ -246,9 +249,9 @@ export default function UpdatePasswordPage() {
                   placeholder="••••••••"
                   disabled={loading}
                   {...register("confirmPassword", {
-                    required: "Potwierdzenie hasła jest wymagane",
+                    required: true,
                     validate: (value) =>
-                      value === password || "Hasła nie są identyczne",
+                      value === password || "Passwords do not match",
                   })}
                   aria-invalid={errors.confirmPassword ? "true" : "false"}
                   className="pr-10"
@@ -267,23 +270,23 @@ export default function UpdatePasswordPage() {
                     <Eye className="h-4 w-4 text-muted-foreground" />
                   )}
                   <span className="sr-only">
-                    {showConfirmPassword ? "Ukryj hasło" : "Pokaż hasło"}
+                    {showConfirmPassword ? "Hide" : "Show"}
                   </span>
                 </Button>
               </div>
               {errors.confirmPassword && (
                 <p className="text-sm text-destructive">
-                  {errors.confirmPassword.message as string}
+                  {errors.confirmPassword.message as string || "Required"}
                 </p>
               )}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full" disabled={loading || !sessionReady}>
-              {loading ? "Zapisywanie..." : sessionReady ? "Zaktualizuj hasło" : "Weryfikowanie..."}
+              {loading ? t("saving") : sessionReady ? t("submit") : t("verifying")}
             </Button>
             <Button variant="ghost" className="w-full" asChild>
-              <Link href="/login">Powrót do logowania</Link>
+              <Link href="/login">{t("backToLogin")}</Link>
             </Button>
           </CardFooter>
         </form>
@@ -291,4 +294,3 @@ export default function UpdatePasswordPage() {
     </div>
   );
 }
-

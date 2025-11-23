@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -11,10 +11,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslations } from "next-intl";
 
 export default function DashboardPage() {
   const { user, loading, signOut } = useAuth();
   const router = useRouter();
+  const t = useTranslations("Dashboard");
+  const tCommon = useTranslations("Common");
 
   useEffect(() => {
     if (!loading && !user) {
@@ -25,7 +28,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
-        <div className="text-lg">Ładowanie...</div>
+        <div className="text-lg">{tCommon("loading")}</div>
       </div>
     );
   }
@@ -35,8 +38,8 @@ export default function DashboardPage() {
   }
 
   const userData = {
-    name: (user.user_metadata?.full_name as string) || user.email?.split("@")[0] || "Użytkownik",
-    email: user.email || "brak@email.com",
+    name: (user.user_metadata?.full_name as string) || user.email?.split("@")[0] || "User",
+    email: user.email || "no-email",
     joinDate: new Date(user.created_at).toISOString().split("T")[0],
     emailVerified: user.email_confirmed_at !== null,
   };
@@ -47,13 +50,13 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold">Dashboard</h1>
+            <h1 className="text-3xl font-bold">{t("title")}</h1>
             <p className="text-muted-foreground">
-              Witaj, {userData.name}!
+              {t("welcome", { name: userData.name })}
             </p>
           </div>
           <Button variant="outline" onClick={signOut}>
-            Wyloguj się
+            {t("logout")}
           </Button>
         </div>
 
@@ -62,13 +65,13 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Profil
+                {t("profile")}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">Aktywny</div>
+              <div className="text-2xl font-bold">{t("active")}</div>
               <p className="text-xs text-muted-foreground">
-                Status konta
+                {t("accountStatus")}
               </p>
             </CardContent>
           </Card>
@@ -76,7 +79,7 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Email
+                {t("email")}
               </CardTitle>
             </CardHeader>
             <CardContent>
@@ -84,7 +87,7 @@ export default function DashboardPage() {
                 {userData.email}
               </div>
               <p className="text-xs text-muted-foreground">
-                {userData.emailVerified ? "Zweryfikowany" : "Niezweryfikowany"}
+                {userData.emailVerified ? t("verified") : t("unverified")}
               </p>
             </CardContent>
           </Card>
@@ -92,15 +95,15 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Data rejestracji
+                {t("joinDate")}
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {new Date(userData.joinDate).toLocaleDateString("pl-PL")}
+                {new Date(userData.joinDate).toLocaleDateString()}
               </div>
               <p className="text-xs text-muted-foreground">
-                Członek od
+                {t("memberSince")}
               </p>
             </CardContent>
           </Card>
@@ -108,13 +111,13 @@ export default function DashboardPage() {
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
-                Sesja
+                {t("session")}
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">Aktywna</div>
+              <div className="text-2xl font-bold">{t("active")}</div>
               <p className="text-xs text-muted-foreground">
-                Zalogowany
+                {t("loggedIn")}
               </p>
             </CardContent>
           </Card>
@@ -124,67 +127,63 @@ export default function DashboardPage() {
         <div className="grid gap-4 md:grid-cols-2">
           <Card>
             <CardHeader>
-              <CardTitle>Profil użytkownika</CardTitle>
+              <CardTitle>{t("userProfile")}</CardTitle>
               <CardDescription>
-                Informacje o Twoim koncie
+                {t("accountInfo")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Imię i nazwisko
+                  {t("name")}
                 </p>
                 <p className="text-lg font-semibold">{userData.name}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Email
+                  {t("email")}
                 </p>
                 <p className="text-lg font-semibold">{userData.email}</p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Data dołączenia
+                  {t("joinDate")}
                 </p>
                 <p className="text-lg font-semibold">
-                  {new Date(userData.joinDate).toLocaleDateString("pl-PL", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
+                  {new Date(userData.joinDate).toLocaleDateString()}
                 </p>
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">
-                  Status weryfikacji
+                  {t("verificationStatus")}
                 </p>
                 <p className="text-lg font-semibold">
-                  {userData.emailVerified ? "✓ Zweryfikowany" : "✗ Niezweryfikowany"}
+                  {userData.emailVerified ? "✓ " + t("verified") : "✗ " + t("unverified")}
                 </p>
               </div>
-              <Button className="w-full mt-4">Edytuj profil</Button>
+              <Button className="w-full mt-4">{t("editProfile")}</Button>
             </CardContent>
           </Card>
 
           <Card>
             <CardHeader>
-              <CardTitle>Szybkie akcje</CardTitle>
+              <CardTitle>{t("quickActions")}</CardTitle>
               <CardDescription>
-                Często używane funkcje
+                {t("commonFunctions")}
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
               <Button variant="outline" className="w-full justify-start">
-                Zmień hasło
+                {t("changePassword")}
               </Button>
               <Button variant="outline" className="w-full justify-start">
-                Ustawienia bezpieczeństwa
+                {t("securitySettings")}
               </Button>
               <Button variant="outline" className="w-full justify-start">
-                Historia aktywności
+                {t("activityHistory")}
               </Button>
               <Button variant="outline" className="w-full justify-start">
-                Powiadomienia
+                {t("notifications")}
               </Button>
             </CardContent>
           </Card>

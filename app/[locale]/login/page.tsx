@@ -2,8 +2,7 @@
 
 import { useForm } from "react-hook-form";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useRouter, Link } from "@/i18n/routing";
 import { Eye, EyeOff } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -17,9 +16,13 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { createClient } from "@/lib/supabase/client";
+import { useTranslations } from "next-intl";
 
 export default function LoginPage() {
   const router = useRouter();
+  const t = useTranslations("Auth");
+  const tCommon = useTranslations("Common");
+
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -42,7 +45,7 @@ export default function LoginPage() {
       });
 
       if (signInError) {
-        setError(signInError.message || "Błąd logowania");
+        setError(signInError.message || tCommon("error"));
         setLoading(false);
         return;
       }
@@ -50,7 +53,7 @@ export default function LoginPage() {
       router.push("/dashboard");
       router.refresh();
     } catch (err: any) {
-      setError(err.message || "Wystąpił nieoczekiwany błąd");
+      setError(err.message || tCommon("error"));
       setLoading(false);
     }
   };
@@ -59,9 +62,9 @@ export default function LoginPage() {
     <div className="flex items-center justify-center min-h-screen p-4">
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Logowanie</CardTitle>
+          <CardTitle>{t("login")}</CardTitle>
           <CardDescription>
-            Wprowadź swoje dane, aby się zalogować
+            {t("login")}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -73,36 +76,36 @@ export default function LoginPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t("email")}</Label>
               <Input
                 id="email"
                 type="email"
                 placeholder="twoj@email.com"
                 disabled={loading}
                 {...register("email", {
-                  required: "Email jest wymagany",
+                  required: true,
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: "Nieprawidłowy adres email",
+                    message: "Invalid email",
                   },
                 })}
                 aria-invalid={errors.email ? "true" : "false"}
               />
               {errors.email && (
                 <p className="text-sm text-destructive">
-                  {errors.email.message as string}
+                  {errors.email.message as string || "Required"}
                 </p>
               )}
             </div>
 
             <div className="space-y-2">
               <div className="flex items-center justify-between">
-                <Label htmlFor="password">Hasło</Label>
+                <Label htmlFor="password">{t("password")}</Label>
                 <Link
                   href="/reset-password"
                   className="text-sm text-primary hover:underline"
                 >
-                  Zapomniałeś hasła?
+                  {t("forgotPassword")}
                 </Link>
               </div>
               <div className="relative">
@@ -112,10 +115,10 @@ export default function LoginPage() {
                   placeholder="••••••••"
                   disabled={loading}
                   {...register("password", {
-                    required: "Hasło jest wymagane",
+                    required: true,
                     minLength: {
                       value: 6,
-                      message: "Hasło musi mieć co najmniej 6 znaków",
+                      message: "Min 6 chars",
                     },
                   })}
                   aria-invalid={errors.password ? "true" : "false"}
@@ -135,25 +138,25 @@ export default function LoginPage() {
                     <Eye className="h-4 w-4 text-muted-foreground" />
                   )}
                   <span className="sr-only">
-                    {showPassword ? "Ukryj hasło" : "Pokaż hasło"}
+                    {showPassword ? "Hide" : "Show"}
                   </span>
                 </Button>
               </div>
               {errors.password && (
                 <p className="text-sm text-destructive">
-                  {errors.password.message as string}
+                  {errors.password.message as string || "Required"}
                 </p>
               )}
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
             <Button type="submit" className="w-full mt-8" disabled={loading}>
-              {loading ? "Logowanie..." : "Zaloguj się"}
+              {loading ? tCommon("loading") : t("login")}
             </Button>
             <p className="text-sm text-center text-muted-foreground">
-              Nie masz konta?{" "}
+              {t("noAccount")}{" "}
               <Link href="/register" className="text-primary hover:underline">
-                Zarejestruj się
+                {t("register")}
               </Link>
             </p>
           </CardFooter>
