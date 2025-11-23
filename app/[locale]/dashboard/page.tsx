@@ -14,7 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTranslations } from "next-intl";
 
 export default function DashboardPage() {
-  const { user, loading, signOut } = useAuth();
+  const { user, loading } = useAuth();
   const router = useRouter();
   const t = useTranslations("Dashboard");
   const tCommon = useTranslations("Common");
@@ -48,16 +48,13 @@ export default function DashboardPage() {
     <div className="min-h-screen p-4 md:p-8">
       <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center pt-16 md:pt-0">
           <div>
             <h1 className="text-3xl font-bold">{t("title")}</h1>
             <p className="text-muted-foreground">
               {t("welcome", { name: userData.name })}
             </p>
           </div>
-          <Button variant="outline" onClick={signOut}>
-            {t("logout")}
-          </Button>
         </div>
 
         {/* Stats Cards */}

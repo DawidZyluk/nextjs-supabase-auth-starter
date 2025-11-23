@@ -5,8 +5,7 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
-import { ThemeToggle } from "@/components/ThemeToggle";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
+import HeaderActions from "@/components/HeaderActions";
 
 export const metadata: Metadata = {
   title: "Auth App",
@@ -42,13 +41,10 @@ export default async function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
-            themes={["light", "dark", "yellow-light", "yellow-dark"]}
+            themes={["light", "dark", "yellow-light", "yellow-dark", "navy-light", "navy-dark"]}
           >
             <AuthProvider>
-                <div className="absolute top-4 right-4 flex items-center gap-4 z-50">
-                    <LanguageSwitcher />
-                    <ThemeToggle />
-                </div>
+                <HeaderActions />
                 {children}
             </AuthProvider>
           </ThemeProvider>

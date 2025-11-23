@@ -5,6 +5,7 @@ import { Moon, Sun } from "lucide-react"
 import { useTheme } from "next-themes"
 import { useTranslations } from "next-intl"
 
+import { Button } from "@/components/ui/button"
 import {
   Select,
   SelectContent,
@@ -40,26 +41,42 @@ export function ThemeToggle() {
     )
   }
 
-  const isDark = resolvedTheme === "dark" || resolvedTheme === "yellow-dark"
+  // Determine current mode (light/dark) and color theme
+  const isDark = resolvedTheme === "dark" || resolvedTheme === "yellow-dark" || resolvedTheme === "navy-dark"
   const isYellow = theme === "yellow-light" || theme === "yellow-dark"
+  const isNavy = theme === "navy-light" || theme === "navy-dark"
 
   const currentMode = isDark ? "dark" : "light"
-  const currentColor = isYellow ? "yellow" : "zinc"
+  let currentColor = "zinc"
+  if (isYellow) currentColor = "yellow"
+  if (isNavy) currentColor = "navy"
 
   const handleValueChange = (value: string) => {
-    // Mode switching
-    if (value === "light") {
-      setTheme(isYellow ? "yellow-light" : "light")
-    } else if (value === "dark") {
-      setTheme(isYellow ? "yellow-dark" : "dark")
-    } else if (value === "system") {
+    switch (value) {
+      // Mode switching
+      case "light":
+        if (isYellow) setTheme("yellow-light")
+        else if (isNavy) setTheme("navy-light")
+        else setTheme("light")
+        break
+      case "dark":
+        if (isYellow) setTheme("yellow-dark")
+        else if (isNavy) setTheme("navy-dark")
+        else setTheme("dark")
+        break
+      case "system":
         setTheme("system")
-    }
-    // Color switching
-    else if (value === "zinc") {
-      setTheme(isDark ? "dark" : "light")
-    } else if (value === "yellow") {
-      setTheme(isDark ? "yellow-dark" : "yellow-light")
+        break
+      // Color switching
+      case "zinc":
+        setTheme(isDark ? "dark" : "light")
+        break
+      case "yellow":
+        setTheme(isDark ? "yellow-dark" : "yellow-light")
+        break
+      case "navy":
+        setTheme(isDark ? "navy-dark" : "navy-light")
+        break
     }
   }
 
@@ -72,8 +89,8 @@ export function ThemeToggle() {
            <div className="flex items-center gap-2">
               {isDark ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
               <span className="truncate">
-                  {t(currentMode)} {isYellow && `(${t("yellow")})`}
-                  {!isYellow && currentColor !== "zinc" && `(${t(currentColor)})`}
+                  {t(currentMode)} 
+                  {currentColor !== "zinc" && ` (${t(currentColor)})`}
               </span>
            </div>
         </SelectTrigger>
@@ -99,6 +116,12 @@ export function ThemeToggle() {
                   <div className="flex items-center gap-2">
                       <div className="h-3 w-3 rounded-full bg-[#FFB700]"></div>
                       {t("yellow")}
+                  </div>
+              </SelectItem>
+              <SelectItem value="navy">
+                  <div className="flex items-center gap-2">
+                      <div className="h-3 w-3 rounded-full bg-[#202D46]"></div>
+                      {t("navy")}
                   </div>
               </SelectItem>
           </SelectGroup>

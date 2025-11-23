@@ -1,10 +1,13 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
+@custom-variant dark (&:is(.dark *, .yellow-dark *, .navy-dark *));
 /* Custom variant for yellow theme - matches when .yellow class is on parent (html) */
 @custom-variant yellow-light (&:is(.yellow-light *));
 @custom-variant yellow-dark (&:is(.yellow-dark *));
+/* Custom variant for navy theme */
+@custom-variant navy-light (&:is(.navy-light *));
+@custom-variant navy-dark (&:is(.navy-dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -199,6 +202,88 @@
   --sidebar-accent-foreground: oklch(0.98 0.01 85);
   --sidebar-border: oklch(0.25 0.03 85);
   --sidebar-ring: oklch(0.81 0.18 85);
+}
+
+.navy-light {
+  /* Navy Theme Light (based on 202D46) */
+  --background: oklch(0.98 0.01 250); /* Bardzo jasny niebieski/biały */
+  --foreground: oklch(0.2 0.05 250); /* Ciemny granatowy tekst */
+  
+  --card: oklch(0.98 0.01 250);
+  --card-foreground: oklch(0.2 0.05 250);
+  
+  --popover: oklch(0.98 0.01 250);
+  --popover-foreground: oklch(0.2 0.05 250);
+  
+  /* PRIMARY: #202D46 -> OKLCH(0.3 0.06 260) */
+  --primary: oklch(0.3 0.06 260); /* Głęboki granat */
+  --primary-foreground: oklch(0.98 0.01 250); /* Jasny tekst na granatowym */
+  
+  --secondary: oklch(0.94 0.03 250); /* Jasny niebieski pastelowy */
+  --secondary-foreground: oklch(0.3 0.06 260);
+  
+  --muted: oklch(0.94 0.03 250);
+  --muted-foreground: oklch(0.5 0.05 250);
+  
+  --accent: oklch(0.92 0.04 250);
+  --accent-foreground: oklch(0.3 0.06 260);
+  
+  --destructive: oklch(0.6 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.9 0.03 250);
+  --input: oklch(0.9 0.03 250);
+  --ring: oklch(0.3 0.06 260);
+  
+  --sidebar: oklch(0.96 0.02 250);
+  --sidebar-foreground: oklch(0.2 0.05 250);
+  --sidebar-primary: oklch(0.3 0.06 260);
+  --sidebar-primary-foreground: oklch(0.98 0.01 250);
+  --sidebar-accent: oklch(0.92 0.04 250);
+  --sidebar-accent-foreground: oklch(0.2 0.05 250);
+  --sidebar-border: oklch(0.9 0.03 250);
+  --sidebar-ring: oklch(0.3 0.06 260);
+}
+
+.navy-dark {
+  /* Navy Theme Dark */
+  --background: oklch(0.2 0.05 260); /* Ciemny granat (bazowy kolor) */
+  --foreground: oklch(0.98 0.01 250);
+  
+  --card: oklch(0.22 0.05 260); /* Nieco jaśniejszy granat */
+  --card-foreground: oklch(0.98 0.01 250);
+  
+  --popover: oklch(0.22 0.05 260);
+  --popover-foreground: oklch(0.98 0.01 250);
+  
+  /* PRIMARY: Jaśniejszy niebieski dla kontrastu w dark mode */
+  --primary: oklch(0.6 0.15 250);
+  --primary-foreground: oklch(0.15 0.05 260);
+  
+  --secondary: oklch(0.3 0.05 260);
+  --secondary-foreground: oklch(0.98 0.01 250);
+  
+  --muted: oklch(0.3 0.05 260);
+  --muted-foreground: oklch(0.7 0.05 250);
+  
+  --accent: oklch(0.3 0.05 260);
+  --accent-foreground: oklch(0.98 0.01 250);
+  
+  --destructive: oklch(0.4 0.15 25);
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.3 0.05 260);
+  --input: oklch(0.3 0.05 260);
+  --ring: oklch(0.6 0.15 250);
+  
+  --sidebar: oklch(0.18 0.05 260);
+  --sidebar-foreground: oklch(0.98 0.01 250);
+  --sidebar-primary: oklch(0.6 0.15 250);
+  --sidebar-primary-foreground: oklch(0.15 0.05 260);
+  --sidebar-accent: oklch(0.3 0.05 260);
+  --sidebar-accent-foreground: oklch(0.98 0.01 250);
+  --sidebar-border: oklch(0.3 0.05 260);
+  --sidebar-ring: oklch(0.6 0.15 250);
 }
 
 @layer base {
