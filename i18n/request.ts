@@ -1,5 +1,5 @@
 import { getRequestConfig } from 'next-intl/server';
-import { routing } from './routing'; // Import routing configuration
+import { routing } from '@/i18n/routing';
 
 export default getRequestConfig(async ({ requestLocale }) => {
     // This typically corresponds to the `[locale]` segment
@@ -10,8 +10,8 @@ export default getRequestConfig(async ({ requestLocale }) => {
     // If a locale was requested and it's one of our valid locales, use it.
     // We can safely cast `requested` to `string` here because `routing.locales.includes`
     // expects a string, and if `requested` is not undefined, it should be a string.
-    if (requested && routing.locales.includes(requested as string)) {
-        locale = requested as string;
+    if (requested && routing.locales.includes(requested)) {
+        locale = requested;
     }
 
     return {
