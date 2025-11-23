@@ -83,7 +83,9 @@
         "notifications": "Powiadomienia",
         "editProfileDescription": "Wprowadź zmiany w swoim profilu. Kliknij zapisz, gdy skończysz.",
         "profileUpdated": "Profil zaktualizowany pomyślnie!",
-        "updateError": "Błąd podczas aktualizacji profilu."
+        "updateError": "Błąd podczas aktualizacji profilu.",
+        "passwordUpdated": "Hasło zaktualizowane pomyślnie!",
+        "changePasswordDescription": "Wprowadź nowe hasło poniżej."
     },
     "Common": {
         "loading": "Ładowanie...",

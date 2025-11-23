@@ -20,51 +20,50 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { createClient } from "@/lib/supabase/client"
-import { User } from "@supabase/supabase-js"
 import { useRouter } from "next/navigation"
 
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
+  password: z.string().min(6, {
+    message: "Password must be at least 6 characters.",
   }),
+  confirmPassword: z.string(),
+}).refine((data) => data.password === data.confirmPassword, {
+  message: "Passwords don't match",
+  path: ["confirmPassword"],
 })
 
-interface EditProfileDialogProps {
-  user: User
-}
-
-export function EditProfileDialog({ user }: EditProfileDialogProps) {
+export function ChangePasswordDialog() {
   const [open, setOpen] = useState(false)
   const [loading, setLoading] = useState(false)
   const router = useRouter()
   const t = useTranslations("Dashboard")
+  const tAuth = useTranslations("Auth")
   const tCommon = useTranslations("Common")
   const supabase = createClient()
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      name: user.user_metadata?.full_name || "",
-    },
   })
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setLoading(true)
     try {
       const { error } = await supabase.auth.updateUser({
-        data: { full_name: values.name },
+        password: values.password,
       })
 
       if (error) {
         throw error
       }
 
-      toast.success(t("profileUpdated"))
+      toast.success(t("passwordUpdated"))
       setOpen(false)
+      reset()
       router.refresh()
     } catch (error) {
       toast.error(t("updateError"))
@@ -77,30 +76,50 @@ export function EditProfileDialog({ user }: EditProfileDialogProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button className="w-full mt-4">{t("editProfile")}</Button>
+        <Button variant="outline" className="w-full justify-start">
+           {t("changePassword")}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>{t("editProfile")}</DialogTitle>
+          <DialogTitle>{t("changePassword")}</DialogTitle>
           <DialogDescription>
-            {t("editProfileDescription")}
+            {t("changePasswordDescription")}
           </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid gap-4 py-4">
             <div className="space-y-2">
-              <Label htmlFor="name">
-                {t("name")}
+              <Label htmlFor="password">
+                {tAuth("password")}
               </Label>
               <Input
-                id="name"
-                {...register("name")}
+                id="password"
+                type="password"
+                {...register("password")}
                 disabled={loading}
               />
             </div>
-            {errors.name && (
+            {errors.password && (
               <p className="text-sm text-destructive">
-                {errors.name.message}
+                {errors.password.message}
+              </p>
+            )}
+            
+            <div className="space-y-2">
+              <Label htmlFor="confirmPassword">
+                {tAuth("confirmPassword")}
+              </Label>
+              <Input
+                id="confirmPassword"
+                type="password"
+                {...register("confirmPassword")}
+                disabled={loading}
+              />
+            </div>
+            {errors.confirmPassword && (
+              <p className="text-sm text-destructive">
+                {errors.confirmPassword.message}
               </p>
             )}
           </div>

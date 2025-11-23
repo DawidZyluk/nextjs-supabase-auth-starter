@@ -14,6 +14,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTranslations } from "next-intl";
 
 import { EditProfileDialog } from "@/components/EditProfileDialog";
+import { ChangePasswordDialog } from "@/components/ChangePasswordDialog";
 
 export default function DashboardPage() {
   const { user, loading } = useAuth();
@@ -172,9 +173,7 @@ export default function DashboardPage() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-2">
-              <Button variant="outline" className="w-full justify-start">
-                {t("changePassword")}
-              </Button>
+              <ChangePasswordDialog />
               <Button variant="outline" className="w-full justify-start">
                 {t("securitySettings")}
               </Button>
