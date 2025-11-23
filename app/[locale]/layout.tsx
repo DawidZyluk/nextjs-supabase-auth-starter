@@ -5,11 +5,15 @@ import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '@/i18n/routing';
+import { ThemeToggle } from "@/components/ThemeToggle";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export const metadata: Metadata = {
   title: "Auth App",
   description: "Authentication app",
 };
+
+import { ThemeProvider } from "@/components/theme-provider";
 
 export default async function RootLayout({
   children,
@@ -30,10 +34,23 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="dark">
+    <html lang={locale} suppressHydrationWarning>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <AuthProvider>{children}</AuthProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <AuthProvider>
+                <div className="absolute top-4 right-4 flex items-center gap-4 z-50">
+                    <LanguageSwitcher />
+                    <ThemeToggle />
+                </div>
+                {children}
+            </AuthProvider>
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

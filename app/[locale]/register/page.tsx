@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -77,9 +76,6 @@ export default function RegisterPage() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>{t("register")}</CardTitle>
-          <CardDescription>
-            {t("register")}
-          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
@@ -90,7 +86,7 @@ export default function RegisterPage() {
             )}
 
             <div className="space-y-2">
-              <Label htmlFor="name">Name</Label>
+              <Label htmlFor="name">{t("name")}</Label>
               <Input
                 id="name"
                 type="text"

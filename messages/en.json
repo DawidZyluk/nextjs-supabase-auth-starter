@@ -9,6 +9,7 @@
         "login": "Log in",
         "register": "Sign up",
         "logout": "Log out",
+        "name": "Name",
         "email": "Email",
         "password": "Password",
         "confirmPassword": "Confirm Password",

@@ -9,6 +9,7 @@
         "login": "Zaloguj się",
         "register": "Zarejestruj się",
         "logout": "Wyloguj się",
+        "name": "Imię i nazwisko",
         "email": "Email",
         "password": "Hasło",
         "confirmPassword": "Potwierdź hasło",

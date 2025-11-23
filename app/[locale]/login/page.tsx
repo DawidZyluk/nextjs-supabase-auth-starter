@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -63,9 +62,6 @@ export default function LoginPage() {
       <Card className="w-full max-w-md">
         <CardHeader>
           <CardTitle>{t("login")}</CardTitle>
-          <CardDescription>
-            {t("login")}
-          </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit(onSubmit)}>
           <CardContent className="space-y-4">
@@ -101,12 +97,6 @@ export default function LoginPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between">
                 <Label htmlFor="password">{t("password")}</Label>
-                <Link
-                  href="/reset-password"
-                  className="text-sm text-primary hover:underline"
-                >
-                  {t("forgotPassword")}
-                </Link>
               </div>
               <div className="relative">
                 <Input
@@ -147,6 +137,14 @@ export default function LoginPage() {
                   {errors.password.message as string || "Required"}
                 </p>
               )}
+            </div>
+            <div className="flex items-center justify-end">
+              <Link
+                href="/reset-password"
+                className="text-sm text-muted-foreground hover:underline"
+              >
+                {t("forgotPassword")}
+              </Link>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col space-y-4">
