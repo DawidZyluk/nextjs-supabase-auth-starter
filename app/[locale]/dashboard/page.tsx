@@ -13,6 +13,8 @@ import {
 import { useAuth } from "@/contexts/AuthContext";
 import { useTranslations } from "next-intl";
 
+import { EditProfileDialog } from "@/components/EditProfileDialog";
+
 export default function DashboardPage() {
   const { user, loading } = useAuth();
   const router = useRouter();
@@ -158,7 +160,7 @@ export default function DashboardPage() {
                   {userData.emailVerified ? "✓ " + t("verified") : "✗ " + t("unverified")}
                 </p>
               </div>
-              <Button className="w-full mt-4">{t("editProfile")}</Button>
+              <EditProfileDialog user={user} />
             </CardContent>
           </Card>
 

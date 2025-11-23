@@ -80,7 +80,10 @@
         "changePassword": "Change Password",
         "securitySettings": "Security Settings",
         "activityHistory": "Activity History",
-        "notifications": "Notifications"
+        "notifications": "Notifications",
+        "editProfileDescription": "Make changes to your profile here. Click save when you're done.",
+        "profileUpdated": "Profile updated successfully!",
+        "updateError": "Error updating profile."
     },
     "Common": {
         "loading": "Loading...",

@@ -80,7 +80,10 @@
         "changePassword": "Zmień hasło",
         "securitySettings": "Ustawienia bezpieczeństwa",
         "activityHistory": "Historia aktywności",
-        "notifications": "Powiadomienia"
+        "notifications": "Powiadomienia",
+        "editProfileDescription": "Wprowadź zmiany w swoim profilu. Kliknij zapisz, gdy skończysz.",
+        "profileUpdated": "Profil zaktualizowany pomyślnie!",
+        "updateError": "Błąd podczas aktualizacji profilu."
     },
     "Common": {
         "loading": "Ładowanie...",
