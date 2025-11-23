@@ -22,9 +22,6 @@ export default function Home() {
         <Button variant="outline" asChild>
           <Link href="/register">{tAuth("register")}</Link>
         </Button>
-        <Button variant="secondary" asChild>
-          <Link href="/dashboard">{tDashboard("title")}</Link>
-        </Button>
       </div>
     </div>
   );
