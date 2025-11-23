@@ -2,30 +2,40 @@
 
 import { useLocale } from "next-intl";
 import { useRouter, usePathname } from "@/i18n/routing";
-import { ChangeEvent, useTransition } from "react";
+import { useTransition } from "react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function LanguageSwitcher() {
-    const locale = useLocale();
-    const router = useRouter();
-    const pathname = usePathname();
-    const [isPending, startTransition] = useTransition();
+  const locale = useLocale();
+  const router = useRouter();
+  const pathname = usePathname();
+  const [isPending, startTransition] = useTransition();
 
-    const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-        const nextLocale = e.target.value;
-        startTransition(() => {
-            router.replace(pathname, { locale: nextLocale });
-        });
-    };
+  const onSelectChange = (value: string) => {
+    startTransition(() => {
+      router.replace(pathname, { locale: value });
+    });
+  };
 
-    return (
-        <select
-            defaultValue={locale}
-            onChange={onSelectChange}
-            disabled={isPending}
-            className="bg-background border border-border rounded px-2 py-1 text-sm"
-        >
-            <option value="en">English</option>
-            <option value="pl">Polski</option>
-        </select>
-    );
+  return (
+    <Select
+      defaultValue={locale}
+      onValueChange={onSelectChange}
+      disabled={isPending}
+    >
+      <SelectTrigger className="w-[100px]">
+        <SelectValue placeholder="Language" />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectItem value="en">English</SelectItem>
+        <SelectItem value="pl">Polski</SelectItem>
+      </SelectContent>
+    </Select>
+  );
 }
