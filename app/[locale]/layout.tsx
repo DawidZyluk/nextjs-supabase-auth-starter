@@ -42,6 +42,7 @@ export default async function RootLayout({
             defaultTheme="system"
             enableSystem
             disableTransitionOnChange
+            themes={["light", "dark", "yellow-light", "yellow-dark"]}
           >
             <AuthProvider>
                 <div className="absolute top-4 right-4 flex items-center gap-4 z-50">

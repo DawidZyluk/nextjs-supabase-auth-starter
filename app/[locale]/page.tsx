@@ -1,7 +1,6 @@
 import { Link } from "@/i18n/routing";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "next-intl";
-import LanguageSwitcher from "@/components/LanguageSwitcher";
 
 export default function Home() {
   const t = useTranslations("HomePage");
@@ -10,9 +9,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen gap-6 p-4 relative">
-      <div className="absolute top-4 right-4">
-        <LanguageSwitcher />
-      </div>
       <div className="text-center space-y-4">
         <h1 className="text-5xl font-bold">{t("title")}</h1>
         <p className="text-xl text-muted-foreground">

@@ -2,6 +2,9 @@
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+/* Custom variant for yellow theme - matches when .yellow class is on parent (html) */
+@custom-variant yellow-light (&:is(.yellow-light *));
+@custom-variant yellow-dark (&:is(.yellow-dark *));
 
 @theme inline {
   --color-background: var(--background);
@@ -114,6 +117,88 @@
   --sidebar-accent-foreground: oklch(0.985 0 0);
   --sidebar-border: oklch(0.274 0.006 286.033);
   --sidebar-ring: oklch(0.442 0.017 285.786);
+}
+
+.yellow-light {
+  /* Yellow Theme Light (based on FFB700) */
+  --background: oklch(0.99 0 0); /* Bardzo jasny żółtawy/biały */
+  --foreground: oklch(0.2 0.03 85); /* Ciemny żółto-brązowy */
+  
+  --card: oklch(0.99 0 0);
+  --card-foreground: oklch(0.2 0.03 85);
+  
+  --popover: oklch(0.99 0 0);
+  --popover-foreground: oklch(0.2 0.03 85);
+  
+  /* PRIMARY: #FFB700 -> OKLCH(0.81 0.18 85) */
+  --primary: oklch(0.81 0.18 85);
+  --primary-foreground: oklch(0.2 0.05 85); /* Ciemny tekst na żółtym tle */
+  
+  --secondary: oklch(0.95 0.04 85); /* Jasny żółty pastelowy */
+  --secondary-foreground: oklch(0.3 0.04 85);
+  
+  --muted: oklch(0.95 0.04 85);
+  --muted-foreground: oklch(0.5 0.04 85);
+  
+  --accent: oklch(0.92 0.06 85); /* Trochę ciemniejszy żółty na hover */
+  --accent-foreground: oklch(0.2 0.03 85);
+  
+  --destructive: oklch(0.6 0.2 25); /* Czerwony pasujący tonacją */
+  --destructive-foreground: oklch(0.98 0 0);
+
+  --border: oklch(0.9 0.05 85);
+  --input: oklch(0.9 0.05 85);
+  --ring: oklch(0.81 0.18 85); /* Żółty ring */
+  
+  --sidebar: oklch(0.98 0.02 85);
+  --sidebar-foreground: oklch(0.2 0.03 85);
+  --sidebar-primary: oklch(0.81 0.18 85);
+  --sidebar-primary-foreground: oklch(0.2 0.05 85);
+  --sidebar-accent: oklch(0.95 0.04 85);
+  --sidebar-accent-foreground: oklch(0.2 0.03 85);
+  --sidebar-border: oklch(0.9 0.05 85);
+  --sidebar-ring: oklch(0.81 0.18 85);
+}
+
+.yellow-dark {
+  /* Yellow Theme Dark */
+  --background: oklch(0.15 0.02 85); /* Ciemne tło, lekko brązowe */
+  --foreground: oklch(0.98 0.01 85); /* Jasny tekst */
+  
+  --card: oklch(0.15 0.02 85);
+  --card-foreground: oklch(0.98 0.01 85);
+  
+  --popover: oklch(0.15 0.02 85);
+  --popover-foreground: oklch(0.98 0.01 85);
+  
+  /* PRIMARY: #FFB700 -> OKLCH(0.81 0.18 85) - Wciąż jasny żółty */
+  --primary: oklch(0.81 0.18 85);
+  --primary-foreground: oklch(0.15 0.02 85); /* Ciemny tekst na primary */
+  
+  --secondary: oklch(0.25 0.03 85); /* Ciemniejszy żółto-brązowy */
+  --secondary-foreground: oklch(0.98 0.01 85);
+  
+  --muted: oklch(0.25 0.03 85);
+  --muted-foreground: oklch(0.7 0.02 85);
+  
+  --accent: oklch(0.25 0.03 85);
+  --accent-foreground: oklch(0.98 0.01 85);
+  
+  --destructive: oklch(0.4 0.15 25);
+  --destructive-foreground: oklch(0.98 0.01 85);
+
+  --border: oklch(0.25 0.03 85);
+  --input: oklch(0.25 0.03 85);
+  --ring: oklch(0.81 0.18 85);
+  
+  --sidebar: oklch(0.15 0.02 85);
+  --sidebar-foreground: oklch(0.98 0.01 85);
+  --sidebar-primary: oklch(0.81 0.18 85);
+  --sidebar-primary-foreground: oklch(0.15 0.02 85);
+  --sidebar-accent: oklch(0.25 0.03 85);
+  --sidebar-accent-foreground: oklch(0.98 0.01 85);
+  --sidebar-border: oklch(0.25 0.03 85);
+  --sidebar-ring: oklch(0.81 0.18 85);
 }
 
 @layer base {

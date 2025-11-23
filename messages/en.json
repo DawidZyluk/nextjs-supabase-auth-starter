@@ -87,5 +87,14 @@
         "error": "An error occurred.",
         "submit": "Submit",
         "cancel": "Cancel"
+    },
+    "Theme": {
+        "title": "Theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System",
+        "zinc": "Zinc",
+        "yellow": "Yellow",
+        "color": "Color"
     }
 }

@@ -87,5 +87,14 @@
         "error": "Wystąpił błąd.",
         "submit": "Wyślij",
         "cancel": "Anuluj"
+    },
+    "Theme": {
+        "title": "Motyw",
+        "light": "Jasny",
+        "dark": "Ciemny",
+        "system": "Systemowy",
+        "zinc": "Szary",
+        "yellow": "Żółty",
+        "color": "Kolor"
     }
 }
